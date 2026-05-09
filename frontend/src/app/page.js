@@ -5,10 +5,16 @@ import Image from "next/image";
 
 export default function Home() {
   return (
+
     <div>
-      <Navbar />
-      <Banner />
+      <div className="relative">
+        <div className="absolute inset-x-0 top-0 z-50">
+          <Navbar />
+        </div>
+        <Banner />
+      </div>
       <Footer />
     </div>
+
   );
 }

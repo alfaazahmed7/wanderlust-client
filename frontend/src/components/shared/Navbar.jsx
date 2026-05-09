@@ -22,14 +22,14 @@ export default function Navbar() {
     const [rightMenuOpen, setRightMenuOpen] = useState(false);
 
     return (
-        <header className="w-full bg-[#1f3338]">
+        <header className="w-full">
             <div
                 className="relative w-full bg-cover bg-center"
                 style={{ backgroundImage: "url('/images/navbar-bg.jpg')" }}
             >
-                <div className="absolute inset-0 bg-[#1f3338]/70" />
+                <div className="absolute inset-0" />
 
-                <div className="relative mx-auto max-w-[1400px] px-3 sm:px-5 py-3">
+                <div className="relative mx-auto px-3 sm:px-5 py-3">
                     {/* Desktop strip (md and up) */}
                     <nav className="hidden md:flex h-14 items-center justify-between bg-white px-5 shadow-sm relative">
                         {/* Left */}
