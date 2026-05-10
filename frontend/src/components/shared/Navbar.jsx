@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, User } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const leftLinks = [
-    { name: "Home", href: "#" },
-    { name: "Destinations", href: "#" },
+    { name: "Home", href: "/" },
+    { name: "Destinations", href: "/add-destination" },
     { name: "My Bookings", href: "#" },
     { name: "Admin", href: "#" },
 ];
@@ -21,15 +22,22 @@ export default function Navbar() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [rightMenuOpen, setRightMenuOpen] = useState(false);
 
+    const pathname = usePathname();
+    const isHome = pathname == "/";
+
     return (
-        <header className="w-full">
+        <header
+            className={`w-full z-50 ${isHome
+                ? "absolute top-0 left-0 px-3 sm:px-5 py-3 text-white"
+                : "relative bg-white"
+                }`}
+        >
             <div
                 className="relative w-full bg-cover bg-center"
-                style={{ backgroundImage: "url('/images/navbar-bg.jpg')" }}
             >
                 <div className="absolute inset-0" />
 
-                <div className="relative mx-auto px-3 sm:px-5 py-3">
+                <div className="relative mx-auto">
                     {/* Desktop strip (md and up) */}
                     <nav className="hidden md:flex h-14 items-center justify-between bg-white px-5 shadow-sm relative">
                         {/* Left */}
@@ -39,8 +47,8 @@ export default function Navbar() {
                                     key={link.name}
                                     href={link.href}
                                     className={`hover:text-sky-700 transition ${idx === 0
-                                            ? "text-sky-600 border-b-2 border-sky-500 pb-[2px]"
-                                            : ""
+                                        ? "text-sky-600 border-b-2 border-sky-500 pb-[2px]"
+                                        : ""
                                         }`}
                                 >
                                     {link.name}
