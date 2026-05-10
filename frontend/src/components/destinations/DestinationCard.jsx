@@ -5,6 +5,7 @@ import {
     Star,
     ArrowUpRight,
 } from "lucide-react";
+import Link from "next/link";
 
 const DestinationCard = ({ destination }) => {
     // Calculate nights from total days
@@ -65,13 +66,15 @@ const DestinationCard = ({ destination }) => {
                 </div>
 
                 {/* Button */}
-                <button className="flex items-center gap-3 text-sky-500 uppercase text-2xl font-medium hover:text-sky-600 transition">
-                    <span className="border-b border-sky-500 leading-none">
-                        Book Now
-                    </span>
+                <Link href={`/destinations/${destination._id}`}>
+                    <button className="flex items-center gap-3 text-sky-500 uppercase text-2xl font-medium hover:text-sky-600 transition cursor-pointer">
+                        <span className="border-b border-sky-500 leading-none">
+                            Book Now
+                        </span>
 
-                    <ArrowUpRight className="w-5 h-5" />
-                </button>
+                        <ArrowUpRight className="w-5 h-5" />
+                    </button>
+                </Link>
             </div>
         </div>
     );
