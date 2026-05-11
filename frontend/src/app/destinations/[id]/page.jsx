@@ -11,6 +11,7 @@ import {
     ArrowRight,
 } from "lucide-react";
 import { EditDestination } from "@/components/destinations/EditDestination";
+import { DeleteDestination } from "@/components/destinations/DeleteDestination";
 
 const DestinationDetailsPage = async ({ params }) => {
     const { id } = await params; // no need to await params
@@ -27,7 +28,7 @@ const DestinationDetailsPage = async ({ params }) => {
         destination = {};
     }
 
-    const title = destination?.destination ?? "";
+    const destinationName = destination?.destinationName ?? "";
     const country = destination?.country ?? "";
     const price = destination?.price ?? "";
     const duration = destination?.duration ?? "";
@@ -55,10 +56,7 @@ const DestinationDetailsPage = async ({ params }) => {
 
                     <div className="flex items-center gap-2 self-start sm:self-auto">
                         <EditDestination destination={destination} />
-                        <button className="inline-flex h-10 items-center gap-2 border border-[#ff7d7d] bg-white px-5 text-sm text-[#ff3f3f] hover:bg-[#fff5f5] cursor-pointer">
-                            <Trash2 size={14} />
-                            Cancel
-                        </button>
+                        <DeleteDestination destination={destination} />
                     </div>
                 </div>
 
@@ -68,7 +66,7 @@ const DestinationDetailsPage = async ({ params }) => {
                         {imageUrl ? (
                             <Image
                                 src={imageUrl}
-                                alt={title || "Destination image"}
+                                alt={destinationName || "Destination image"}
                                 fill
                                 priority
                                 quality={100}
@@ -83,13 +81,13 @@ const DestinationDetailsPage = async ({ params }) => {
                 <section className="grid grid-cols-1 gap-6 border-t border-[#e9e9e9] pt-6 lg:grid-cols-[1fr_320px]">
                     {/* Left */}
                     <div>
-                        <div className="mb-2 inline-flex items-center gap-2 text-[15px] text-[#666]">
+                        <div className="inline-flex items-center gap-2 text-[15px] text-[#666]">
                             <MapPin size={15} />
                             <span>{country}</span>
                         </div>
 
                         <h1 className="mb-2 text-[36px] font-medium leading-tight text-[#222] md:text-[48px]">
-                            {title}
+                            {destinationName}
                         </h1>
 
                         <div className="mb-8 flex flex-wrap items-center gap-3 text-[15px] text-[#555]">

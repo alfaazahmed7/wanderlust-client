@@ -244,20 +244,22 @@ export default function AddDestinationPage() {
 
                         {/* Buttons — bottom right; stack on very small screens */}
                         <div className="flex flex-col-reverse gap-3 pt-2 sm:flex-row sm:justify-end sm:pt-4">
-                            <Link
-                                href="/"
-                                className="inline-flex items-center justify-center gap-2 rounded-md border border-red-500 bg-white px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50 sm:inline-flex"
+                            <button
+                                type=""
+                                className="inline-flex items-center justify-center gap-2 rounded-md border border-red-500 bg-white px-4 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50 sm:inline-flex cursor-pointer"
                             >
                                 <TrashIcon />
                                 Cancel
-                            </Link>
-                            <button
-                                type="submit"
-                                className="inline-flex items-center justify-center gap-2 rounded-md bg-cyan-500 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-cyan-600"
-                            >
-                                <SaveIcon />
-                                Add Travel Package
                             </button>
+                            <Link href={'/destinations'}>
+                                <button
+                                    type="submit"
+                                    className="inline-flex items-center justify-center gap-2 rounded-md bg-cyan-500 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-cyan-600 cursor-pointer"
+                                >
+                                    <SaveIcon />
+                                    Add Travel Package
+                                </button>
+                            </Link>
                         </div>
                     </form>
                 </div>

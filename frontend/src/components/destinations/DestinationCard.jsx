@@ -17,7 +17,7 @@ const DestinationCard = ({ destination }) => {
             <div className="relative w-full h-[250px] xl:h-[300px]">
                 <Image
                     src={destination.imageUrl}
-                    alt={destination.destination}
+                    alt={destination.destinationName}
                     fill
                     className="w-full object-cover"
                 />
