@@ -42,7 +42,7 @@ const DestinationCard = ({ destination }) => {
                 {/* Destination + Price */}
                 <div className="flex justify-between items-end mb-2">
                     <h2 className="text-3xl font-semibold text-black">
-                        {destination.destination}
+                        {destination.destinationName}
                     </h2>
 
                     <div>

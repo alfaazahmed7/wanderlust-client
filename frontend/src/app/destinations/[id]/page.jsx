@@ -10,6 +10,7 @@ import {
     Check,
     ArrowRight,
 } from "lucide-react";
+import { EditDestination } from "@/components/destinations/EditDestination";
 
 const DestinationDetailsPage = async ({ params }) => {
     const { id } = await params; // no need to await params
@@ -53,11 +54,8 @@ const DestinationDetailsPage = async ({ params }) => {
                     </Link>
 
                     <div className="flex items-center gap-2 self-start sm:self-auto">
-                        <button className="inline-flex h-10 items-center gap-2 border border-[#d8d8d8] bg-white px-5 text-sm text-[#333] hover:bg-[#f3f3f3]">
-                            <Pencil size={14} />
-                            Edit
-                        </button>
-                        <button className="inline-flex h-10 items-center gap-2 border border-[#ff7d7d] bg-white px-5 text-sm text-[#ff3f3f] hover:bg-[#fff5f5]">
+                        <EditDestination destination={destination} />
+                        <button className="inline-flex h-10 items-center gap-2 border border-[#ff7d7d] bg-white px-5 text-sm text-[#ff3f3f] hover:bg-[#fff5f5] cursor-pointer">
                             <Trash2 size={14} />
                             Cancel
                         </button>
