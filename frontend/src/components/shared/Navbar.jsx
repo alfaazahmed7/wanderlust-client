@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X, User } from "lucide-react";
+import { Menu, User, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { Avatar, Spinner } from "@heroui/react";
@@ -67,7 +67,7 @@ export default function Navbar() {
 
                         {/* LOGO */}
                         <Link
-                            href="#"
+                            href="/"
                             className="text-[34px] lg:text-[40px] leading-none font-semibold text-sky-600 tracking-tight"
                             style={{ fontFamily: "Georgia, serif" }}
                         >
@@ -76,6 +76,14 @@ export default function Navbar() {
 
                         {/* RIGHT LINKS (expanded) */}
                         <div className="hidden lg:flex items-center gap-6 text-[14px] font-medium">
+
+                            <Link
+                                href="/profile"
+                                className={`flex items-center gap-1 ${getLinkClass("/profile")}`}
+                            >
+                                <User size={14} />
+                                <span>Profile</span>
+                            </Link>
 
                             {isPending ?
                                 <Spinner />
@@ -95,7 +103,7 @@ export default function Navbar() {
 
                                         <button
                                             onClick={handleSignOut}
-                                            className={`flex items-center gap-1 cursor-pointer ${getLinkClass("/profile")}`}
+                                            className={`flex items-center gap-1 cursor-pointer ${getLinkClass("#")}`}
                                         >
                                             Sign Out
                                         </button>
@@ -141,9 +149,11 @@ export default function Navbar() {
                                             </Avatar>
 
                                             <button
-                                                onClick={handleSignOut}
-                                                className={`flex items-center gap-1 cursor-pointer ${getLinkClass("/profile")}`}
-                                                onClick={() => setRightMenuOpen(false)}
+                                                onClick={() => {
+                                                    handleSignOut();
+                                                    setMobileOpen(false);
+                                                }}
+                                                className={`flex items-center gap-1 ${getLinkClass("/#")}`}
                                             >
                                                 Sign Out
                                             </button>
@@ -251,7 +261,7 @@ export default function Navbar() {
                                                     handleSignOut();
                                                     setMobileOpen(false);
                                                 }}
-                                                className={`flex items-center gap-1 ${getLinkClass("/profile")}`}
+                                                className={`flex items-center gap-1 ${getLinkClass("/#")}`}
                                             >
                                                 Sign Out
                                             </button>
