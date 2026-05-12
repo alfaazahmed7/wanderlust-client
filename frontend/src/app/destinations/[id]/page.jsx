@@ -47,7 +47,7 @@ const DestinationDetailsPage = async ({ params }) => {
                 {/* Top bar */}
                 <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <Link
-                        href="/add-destination"
+                        href="/destinations"
                         className="inline-flex items-center gap-2 text-sm text-[#6b6b6b] hover:text-black"
                     >
                         <ArrowLeft size={16} />

@@ -4,19 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, User } from "lucide-react";
 import { usePathname } from "next/navigation";
-
-const leftLinks = [
-    { name: "Home", href: "/" },
-    { name: "Destinations", href: "/destinations" },
-    { name: "Add-Destinations", href: "/add-destination" },
-    { name: "Admin", href: "/admin" },
-];
-
-const rightLinks = [
-    { name: "Profile", href: "/profile", icon: true },
-    { name: "Login", href: "/login" },
-    { name: "Sign Up", href: "/sign-up" },
-];
+import { authClient } from "@/lib/auth-client";
+import { Avatar, Spinner } from "@heroui/react";
 
 export default function Navbar() {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -30,30 +19,53 @@ export default function Navbar() {
 
     const getLinkClass = (href) =>
         `hover:text-sky-700 transition ${isActiveLink(href)
-            ? "text-sky-600 border-b-2 border-sky-500 pb-[2px]"
-            : "text-gray-800"
+            ? "text-sky-600 border-b-2 border-sky-500 pb-[2px] cursor-pointer"
+            : "text-gray-800 cursor-pointer"
         }`;
+
+    const userData = authClient.useSession();
+    const user = userData.data?.user;
+    const isPending = userData.isPending;
+
+    const handleSignOut = async () => {
+        await authClient.signOut();
+    }
 
     return (
         <header
             className={`w-full z-50 ${isHome
-                    ? "absolute top-0 left-0 px-3 sm:px-5 py-3 text-white"
-                    : "relative bg-white"
+                ? "absolute top-0 left-0 px-3 sm:px-5 py-3 text-white"
+                : "relative bg-white"
                 }`}
         >
             <div className="relative w-full bg-cover bg-center">
                 <div className="absolute inset-0" />
 
                 <div className="relative mx-auto">
+                    {/* DESKTOP NAV */}
                     <nav className="hidden md:flex h-14 items-center justify-between bg-white px-5 shadow-sm relative">
+
+                        {/* LEFT LINKS (expanded) */}
                         <div className="flex items-center gap-4 lg:gap-6 text-[14px] font-medium">
-                            {leftLinks.map((link) => (
-                                <Link key={link.name} href={link.href} className={getLinkClass(link.href)}>
-                                    {link.name}
-                                </Link>
-                            ))}
+
+                            <Link href="/" className={getLinkClass("/")}>
+                                Home
+                            </Link>
+
+                            <Link href="/destinations" className={getLinkClass("/destinations")}>
+                                Destinations
+                            </Link>
+
+                            <Link href="/add-destination" className={getLinkClass("/add-destination")}>
+                                Add-Destinations
+                            </Link>
+
+                            <Link href="/admin" className={getLinkClass("/admin")}>
+                                Admin
+                            </Link>
                         </div>
 
+                        {/* LOGO */}
                         <Link
                             href="#"
                             className="text-[34px] lg:text-[40px] leading-none font-semibold text-sky-600 tracking-tight"
@@ -62,19 +74,42 @@ export default function Navbar() {
                             Wanderlast
                         </Link>
 
+                        {/* RIGHT LINKS (expanded) */}
                         <div className="hidden lg:flex items-center gap-6 text-[14px] font-medium">
-                            {rightLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    className={link.icon ? `flex items-center gap-1 ${getLinkClass(link.href)}` : getLinkClass(link.href)}
-                                >
-                                    {link.icon && <User size={14} />}
-                                    <span>{link.name}</span>
-                                </Link>
-                            ))}
+
+                            {isPending ?
+                                <Spinner />
+                                :
+                                user ? (
+                                    <div className="flex items-center gap-3">
+                                        <Avatar className="ring-2 ring-primary/20">
+                                            <Avatar.Image
+                                                alt={user?.name}
+                                                src={user?.image}
+                                                referrerPolicy="no-referrer"
+                                            />
+                                            <Avatar.Fallback>
+                                                {user?.name?.charAt(0)}
+                                            </Avatar.Fallback>
+                                        </Avatar>
+
+                                        <button
+                                            onClick={handleSignOut}
+                                            className={`flex items-center gap-1 cursor-pointer ${getLinkClass("/profile")}`}
+                                        >
+                                            Sign Out
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <Link href="/sign-in" className={`cursor-pointer ${getLinkClass("/sign-in")}`}>
+                                            Login
+                                        </Link>
+                                    </div>
+                                )}
                         </div>
 
+                        {/* MOBILE RIGHT MENU BUTTON */}
                         <div className="lg:hidden flex items-center">
                             <button
                                 onClick={() => setRightMenuOpen((v) => !v)}
@@ -85,25 +120,50 @@ export default function Navbar() {
                             </button>
                         </div>
 
+                        {/* RIGHT DROPDOWN MENU */}
                         {rightMenuOpen && (
                             <div className="absolute right-5 top-[58px] z-20 w-44 rounded-md border bg-white shadow-md p-2 lg:hidden">
-                                {rightLinks.map((link) => (
-                                    <Link
-                                        key={link.name}
-                                        href={link.href}
-                                        className={`block rounded px-2 py-2 text-sm font-medium transition ${isActiveLink(link.href)
-                                                ? "text-sky-600 bg-sky-50"
-                                                : "text-gray-800 hover:bg-gray-50 hover:text-sky-700"
-                                            }`}
-                                        onClick={() => setRightMenuOpen(false)}
-                                    >
-                                        {link.name}
-                                    </Link>
-                                ))}
+
+                                {isPending ?
+                                    <Spinner />
+                                    :
+                                    user ? (
+                                        <div className="flex items-center gap-3">
+                                            <Avatar className="ring-2 ring-primary/20">
+                                                <Avatar.Image
+                                                    alt={user?.name}
+                                                    src={user?.image}
+                                                    referrerPolicy="no-referrer"
+                                                />
+                                                <Avatar.Fallback>
+                                                    {user?.name?.charAt(0)}
+                                                </Avatar.Fallback>
+                                            </Avatar>
+
+                                            <button
+                                                onClick={handleSignOut}
+                                                className={`flex items-center gap-1 cursor-pointer ${getLinkClass("/profile")}`}
+                                                onClick={() => setRightMenuOpen(false)}
+                                            >
+                                                Sign Out
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <Link
+                                                href="/sign-in"
+                                                className={`cursor-pointer ${getLinkClass("/sign-in")}`}
+                                                onClick={() => setRightMenuOpen(false)}
+                                            >
+                                                Login
+                                            </Link>
+                                        </div>
+                                    )}
                             </div>
                         )}
                     </nav>
 
+                    {/* MOBILE NAV */}
                     <nav className="md:hidden bg-white shadow-sm">
                         <div className="h-14 px-4 flex items-center justify-between">
                             <Link
@@ -125,24 +185,93 @@ export default function Navbar() {
 
                         {mobileOpen && (
                             <div className="border-t px-4 py-3 space-y-2 text-sm font-medium">
-                                {[...leftLinks, ...rightLinks].map((link) => (
-                                    <Link
-                                        key={link.name}
-                                        href={link.href}
-                                        className={`block py-1 transition ${isActiveLink(link.href)
-                                                ? "text-sky-600 border-b-2 border-sky-500"
-                                                : "text-gray-800 hover:text-sky-700"
-                                            }`}
-                                        onClick={() => setMobileOpen(false)}
-                                    >
-                                        {link.name}
-                                    </Link>
-                                ))}
+
+                                <Link
+                                    href="/"
+                                    className={`block py-1 transition ${isActiveLink("/")
+                                        ? "text-sky-600 border-b-2 border-sky-500"
+                                        : "text-gray-800 hover:text-sky-700"
+                                        }`}
+                                    onClick={() => setMobileOpen(false)}
+                                >
+                                    Home
+                                </Link>
+
+                                <Link
+                                    href="/destinations"
+                                    className={`block py-1 transition ${isActiveLink("/destinations")
+                                        ? "text-sky-600 border-b-2 border-sky-500"
+                                        : "text-gray-800 hover:text-sky-700"
+                                        }`}
+                                    onClick={() => setMobileOpen(false)}
+                                >
+                                    Destinations
+                                </Link>
+
+                                <Link
+                                    href="/add-destination"
+                                    className={`block py-1 transition ${isActiveLink("/add-destination")
+                                        ? "text-sky-600 border-b-2 border-sky-500"
+                                        : "text-gray-800 hover:text-sky-700"
+                                        }`}
+                                    onClick={() => setMobileOpen(false)}
+                                >
+                                    Add-Destinations
+                                </Link>
+
+                                <Link
+                                    href="/admin"
+                                    className={`block py-1 transition ${isActiveLink("/admin")
+                                        ? "text-sky-600 border-b-2 border-sky-500"
+                                        : "text-gray-800 hover:text-sky-700"
+                                        }`}
+                                    onClick={() => setMobileOpen(false)}
+                                >
+                                    Admin
+                                </Link>
+
+                                {isPending ?
+                                    <Spinner size="sm" />
+                                    :
+                                    user ? (
+                                        <div className="flex items-center gap-3">
+                                            <Avatar className="ring-2 ring-primary/20">
+                                                <Avatar.Image
+                                                    alt={user?.name}
+                                                    src={user?.image}
+                                                    referrerPolicy="no-referrer"
+                                                />
+                                                <Avatar.Fallback>
+                                                    {user?.name?.charAt(0)}
+                                                </Avatar.Fallback>
+                                            </Avatar>
+
+                                            <button
+                                                onClick={() => {
+                                                    handleSignOut();
+                                                    setMobileOpen(false);
+                                                }}
+                                                className={`flex items-center gap-1 ${getLinkClass("/profile")}`}
+                                            >
+                                                Sign Out
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div>
+                                            <Link
+                                                href="/sign-in"
+                                                className={getLinkClass("/sign-in")}
+                                                onClick={() => setMobileOpen(false)}
+                                            >
+                                                Login
+                                            </Link>
+                                        </div>
+                                    )}
                             </div>
                         )}
                     </nav>
                 </div>
-            </div>
-        </header>
+            </div >
+        </header >
     );
 }
