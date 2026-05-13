@@ -1,7 +1,11 @@
-import { Calendar, MapPin, Trash2, Eye, CheckCircle } from "lucide-react";
+import { Calendar, CheckCircle, Eye, MapPin } from "lucide-react";
 import Image from "next/image";
+import { BookingCardDeletion } from "../BookingCardDeletion";
 
 export default function MyBookingCard({ booking }) {
+    const bookingId = booking._id;
+    // console.log(bookingId, 'booking');
+
     return (
         <div className="bg-white rounded-2xl shadow-md overflow-hidden border border-gray-100 mb-8">
             <div className="flex flex-col sm:flex-row items-stretch">
@@ -50,10 +54,7 @@ export default function MyBookingCard({ booking }) {
 
                     {/* Action Buttons */}
                     <div className="flex sm:flex-col gap-2 w-full sm:w-auto">
-                        <button className="flex items-center justify-center gap-1.5 border border-red-400 text-red-500 hover:bg-red-50 transition-colors rounded-lg px-4 py-2 text-sm font-semibold w-full sm:w-auto">
-                            <Trash2 className="w-4 h-4" />
-                            Cancel
-                        </button>
+                        <BookingCardDeletion bookingId={bookingId} />
                         <button className="flex items-center justify-center gap-1.5 bg-cyan-500 hover:bg-cyan-600 transition-colors text-white rounded-lg px-4 py-2 text-sm font-semibold w-full sm:w-auto">
                             <Eye className="w-4 h-4" />
                             View

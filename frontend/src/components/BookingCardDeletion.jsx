@@ -2,32 +2,28 @@
 
 import { AlertDialog, Button, ModalTrigger } from "@heroui/react";
 import { Trash2 } from "lucide-react";
-import { redirect } from "next/navigation";
 
-export function DeleteDestination({ destination }) {
+export function BookingCardDeletion({ bookingId }) {
 
-    const handleDestinationDelete = async () => {
-        const res = await fetch(`http://localhost:5000/destination/${destination._id}`, {
+    const handleCancelBooking = async () => {
+        const res = await fetch(`http://localhost:5000/bookings/${bookingId}`, {
             method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-type': 'application/json'
             }
         });
 
         const data = await res.json();
-        redirect('/destinations');
-        console.log(data, 'data');
+        window.location.reload();
     }
 
     return (
         <AlertDialog>
 
             <ModalTrigger>
-                <button
-                    className="inline-flex h-10 items-center gap-2 border border-[#ff7d7d] bg-white px-5 text-sm text-[#ff3f3f] hover:bg-[#fff5f5]  cursor-pointer"
-                >
-                    <Trash2 size={14} />
-                    Delete
+                <button className="flex items-center justify-center gap-1.5 border border-red-400 text-red-500 hover:bg-red-50 transition-colors rounded-lg px-4 py-2 text-sm font-semibold w-full sm:w-auto cursor-pointer">
+                    <Trash2 className="w-4 h-4" />
+                    Cancel
                 </button>
             </ModalTrigger>
 
@@ -37,11 +33,11 @@ export function DeleteDestination({ destination }) {
                         <AlertDialog.CloseTrigger />
                         <AlertDialog.Header>
                             <AlertDialog.Icon status="danger" />
-                            <AlertDialog.Heading>Delete destination permanently?</AlertDialog.Heading>
+                            <AlertDialog.Heading>Cancel project permanently?</AlertDialog.Heading>
                         </AlertDialog.Header>
                         <AlertDialog.Body>
                             <p>
-                                This will permanently delete <strong>{destination.destinationName}</strong> and all of its
+                                This will permanently cancel <strong>booking</strong> and all of its
                                 data. This action cannot be undone.
                             </p>
                         </AlertDialog.Body>
@@ -50,11 +46,11 @@ export function DeleteDestination({ destination }) {
                                 Cancel
                             </Button>
                             <Button
+                                onClick={handleCancelBooking}
                                 slot="close"
                                 variant="danger"
-                                onClick={handleDestinationDelete}
                             >
-                                Delete Destination
+                                Cancel Booking
                             </Button>
                         </AlertDialog.Footer>
                     </AlertDialog.Dialog>
