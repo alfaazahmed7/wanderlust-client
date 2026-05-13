@@ -56,11 +56,11 @@ export default function Navbar() {
                                 Destinations
                             </Link>
 
-                            <Link href="/add-destination" className={getLinkClass("/add-destination")}>
-                                Add-Destinations
+                            <Link href="/my-bookings" className={getLinkClass("/my-bookings")}>
+                                My-Bookings
                             </Link>
 
-                            <Link href="/admin" className={getLinkClass("/admin")}>
+                            <Link href="/add-destination" className={getLinkClass("/add-destination")}>
                                 Admin
                             </Link>
                         </div>

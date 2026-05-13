@@ -2,9 +2,8 @@ import DestinationCard from "@/components/destinations/DestinationCard";
 
 
 const DestinationPage = async () => {
-    const res = await fetch('http://localhost:5000/destination')
+    const res = await fetch('http://localhost:5000/destination');
     const destinations = await res.json()
-
 
     return (
         <div className="w-10/12 xl:w-9/12 mx-auto mt-28 mb-20">

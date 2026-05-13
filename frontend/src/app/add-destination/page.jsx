@@ -64,7 +64,6 @@ export default function AddDestinationPage() {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const destination = Object.fromEntries(formData.entries());
-        console.log("Form submitted:", destination);
 
         const res = await fetch('http://localhost:5000/destination', {
             method: 'POST',
@@ -75,7 +74,6 @@ export default function AddDestinationPage() {
         })
 
         const data = await res.json();
-        console.log(data, 'data');
     }
 
     return (
