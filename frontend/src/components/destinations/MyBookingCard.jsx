@@ -1,6 +1,6 @@
 import { Calendar, CheckCircle, Eye, MapPin } from "lucide-react";
 import Image from "next/image";
-import { BookingCardDeletion } from "../BookingCardDeletion";
+import { BookingCardDeletion } from "./BookingCardDeletion";
 
 export default function MyBookingCard({ booking }) {
     const bookingId = booking._id;
@@ -53,7 +53,7 @@ export default function MyBookingCard({ booking }) {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex sm:flex-col gap-2 w-full sm:w-auto">
+                    <div className="flex sm:flex-col gap-2 sm:w-auto">
                         <BookingCardDeletion bookingId={bookingId} />
                         <button className="flex items-center justify-center gap-1.5 bg-cyan-500 hover:bg-cyan-600 transition-colors text-white rounded-lg px-4 py-2 text-sm font-semibold w-full sm:w-auto">
                             <Eye className="w-4 h-4" />

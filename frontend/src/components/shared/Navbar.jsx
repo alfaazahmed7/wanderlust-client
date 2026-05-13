@@ -219,18 +219,18 @@ export default function Navbar() {
                                 </Link>
 
                                 <Link
-                                    href="/add-destination"
+                                    href="/my-bookings"
                                     className={`block py-1 transition ${isActiveLink("/add-destination")
                                         ? "text-sky-600 border-b-2 border-sky-500"
                                         : "text-gray-800 hover:text-sky-700"
                                         }`}
                                     onClick={() => setMobileOpen(false)}
                                 >
-                                    Add-Destinations
+                                    My Bookings
                                 </Link>
 
                                 <Link
-                                    href="/admin"
+                                    href="/add-destination"
                                     className={`block py-1 transition ${isActiveLink("/admin")
                                         ? "text-sky-600 border-b-2 border-sky-500"
                                         : "text-gray-800 hover:text-sky-700"
