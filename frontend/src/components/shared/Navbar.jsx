@@ -132,6 +132,14 @@ export default function Navbar() {
                         {rightMenuOpen && (
                             <div className="absolute right-5 top-[58px] z-20 w-44 rounded-md border bg-white shadow-md p-2 lg:hidden">
 
+                                <Link
+                                    href="/profile"
+                                    className={`flex items-center gap-1 mb-3 ${getLinkClass("/profile")}`}
+                                >
+                                    <User size={14} />
+                                    <span>Profile</span>
+                                </Link>
+
                                 {isPending ?
                                     <Spinner />
                                     :
@@ -238,6 +246,14 @@ export default function Navbar() {
                                     onClick={() => setMobileOpen(false)}
                                 >
                                     Admin
+                                </Link>
+
+                                <Link
+                                    href="/profile"
+                                    className={`flex items-center gap-1 ${getLinkClass("/profile")}`}
+                                >
+                                    <User size={14} />
+                                    <span>Profile</span>
                                 </Link>
 
                                 {isPending ?
