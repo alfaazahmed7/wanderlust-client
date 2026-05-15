@@ -11,6 +11,7 @@ import {
     ArrowRight,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const BookingCard = ({ destination }) => {
 
@@ -57,6 +58,8 @@ const BookingCard = ({ destination }) => {
             body: JSON.stringify(bookingData)
         });
         const data = await res.json();
+
+        toast.success(`Your booking for ${destinationName} has been confirmed successfully.`);
     }
 
     return (

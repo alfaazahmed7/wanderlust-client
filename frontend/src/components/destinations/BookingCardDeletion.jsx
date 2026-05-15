@@ -3,8 +3,10 @@
 import { authClient } from "@/lib/auth-client";
 import { AlertDialog, Button, ModalTrigger } from "@heroui/react";
 import { Trash2 } from "lucide-react";
+import toast from "react-hot-toast";
 
-export function BookingCardDeletion({ bookingId }) {
+export function BookingCardDeletion({ bookingId, booking }) {
+    console.log(booking, 'booking');
 
     const handleCancelBooking = async () => {
         try {
@@ -21,6 +23,7 @@ export function BookingCardDeletion({ bookingId }) {
                 throw new Error('Failed to cancel booking');
             }
             const result = await res.json();
+            toast.success(`You have successfully cancel ${booking.destinationName} tour`);
             window.location.reload();
         }
 

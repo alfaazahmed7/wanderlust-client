@@ -1,5 +1,6 @@
 'use client';
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 /** Small icons so you don't need extra packages */
 function TrashIcon() {
@@ -71,9 +72,10 @@ export default function AddDestinationPage() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(destination)
-        })
+        });
 
         const data = await res.json();
+        toast.success(`Successfully created a new tour plan`);
     }
 
     return (
@@ -250,6 +252,7 @@ export default function AddDestinationPage() {
                             </button>
                             <Link href={'/destinations'}>
                                 <button
+                                    onSubmit={onSubmit}
                                     type="submit"
                                     className="inline-flex items-center justify-center gap-2 rounded-md bg-cyan-500 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-cyan-600 cursor-pointer"
                                 >

@@ -4,21 +4,24 @@ import { authClient } from "@/lib/auth-client";
 import { AlertDialog, Button, ModalTrigger } from "@heroui/react";
 import { Trash2 } from "lucide-react";
 import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 export function DeleteDestination({ destination }) {
 
     const handleDestinationDelete = async () => {
         const { data: tokenData } = await authClient.token();
+        console.log(tokenData, 't');
 
         const res = await fetch(`http://localhost:5000/destination/${destination._id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                authorization: `Bearer ${tokenData}`
+                authorization: `Bearer ${tokenData.token}`
             }
         });
 
         const data = await res.json();
+        toast.success(`You have successfully delated ${destination.destinationName}`);
         redirect('/destinations');
     }
 

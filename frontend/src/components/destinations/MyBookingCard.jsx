@@ -54,7 +54,10 @@ export default function MyBookingCard({ booking }) {
 
                     {/* Action Buttons */}
                     <div className="flex sm:flex-col gap-2 sm:w-auto">
-                        <BookingCardDeletion bookingId={bookingId} />
+                        <BookingCardDeletion
+                            booking={booking}
+                            bookingId={bookingId}
+                        />
                         <button className="flex items-center justify-center gap-1.5 bg-cyan-500 hover:bg-cyan-600 transition-colors text-white rounded-lg px-4 py-2 text-sm font-semibold w-full sm:w-auto">
                             <Eye className="w-4 h-4" />
                             View

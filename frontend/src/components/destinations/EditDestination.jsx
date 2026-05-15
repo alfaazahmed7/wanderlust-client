@@ -3,6 +3,7 @@
 import { authClient } from "@/lib/auth-client";
 import { Button, Modal, ModalTrigger, Surface } from "@heroui/react";
 import { Edit, Pencil } from "lucide-react";
+import toast from "react-hot-toast";
 
 function ChevronIcon() {
     return (
@@ -51,9 +52,10 @@ export function EditDestination({ destination }) {
                 authorization: `Bearer ${tokenData}`
             },
             body: JSON.stringify(destination)
-        })
-
+        });
         const data = await res.json();
+
+        toast.success(`You have successfully edit ${destinationName} details`);
     };
 
     return (
