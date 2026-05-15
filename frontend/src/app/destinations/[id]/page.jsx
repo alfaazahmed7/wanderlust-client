@@ -3,18 +3,28 @@ import { ArrowLeft, } from "lucide-react";
 import { EditDestination } from "@/components/destinations/EditDestination";
 import { DeleteDestination } from "@/components/destinations/DeleteDestination";
 import BookingCard from "@/components/destinations/BookingCard";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const DestinationDetailsPage = async ({ params }) => {
     const { id } = await params;
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    });
 
     let destination = {};
     try {
-        const res = await fetch(`http://localhost:5000/destination/${id}`);
+        const res = await fetch(`http://localhost:5000/destination/${id}`, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        });
 
         if (res.ok) {
             destination = await res.json();
         }
-    } catch (error) {
+    }
+    catch (error) {
         // Keep destination empty if request fails
         destination = {};
     }

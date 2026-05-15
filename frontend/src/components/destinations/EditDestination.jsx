@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { Button, Modal, ModalTrigger, Surface } from "@heroui/react";
 import { Edit, Pencil } from "lucide-react";
 
@@ -41,16 +42,18 @@ export function EditDestination({ destination }) {
         const destination = Object.fromEntries(formData.entries());
         console.log("Form submitted:", destination);
 
+        const { data: tokenData } = await authClient.token();
+
         const res = await fetch(`http://localhost:5000/destination/${_id}`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${tokenData}`
             },
             body: JSON.stringify(destination)
         })
 
         const data = await res.json();
-        console.log(data, 'data');
     };
 
     return (

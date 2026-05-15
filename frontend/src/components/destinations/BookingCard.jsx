@@ -46,14 +46,16 @@ const BookingCard = ({ destination }) => {
             formattetdDate,
         }
 
+        const { data: tokenData } = await authClient.token();
+
         const res = await fetch('http://localhost:5000/bookings', {
             method: 'POST',
             headers: {
-                'Content-type': 'application/json'
+                'Content-type': 'application/json',
+                authorization: `Bearer ${tokenData?.token}`
             },
             body: JSON.stringify(bookingData)
         });
-
         const data = await res.json();
     }
 

@@ -1,21 +1,33 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { AlertDialog, Button, ModalTrigger } from "@heroui/react";
 import { Trash2 } from "lucide-react";
 
 export function BookingCardDeletion({ bookingId }) {
 
     const handleCancelBooking = async () => {
-        const res = await fetch(`http://localhost:5000/bookings/${bookingId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-type': 'application/json'
+        try {
+            const { data } = await authClient.token();
+            const accessToken = data?.token;
+            const res = await fetch(`http://localhost:5000/bookings/${bookingId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
+            if (!res.ok) {
+                throw new Error('Failed to cancel booking');
             }
-        });
+            const result = await res.json();
+            window.location.reload();
+        }
 
-        const data = await res.json();
-        window.location.reload();
-    }
+        catch (error) {
+            console.error(error);
+        }
+    };
 
     return (
         <AlertDialog>
