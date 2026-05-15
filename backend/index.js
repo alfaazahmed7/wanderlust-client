@@ -69,7 +69,6 @@ async function run() {
 
         app.post('/destination', async (req, res) => {
             const destinationData = req.body;
-            console.log(destinationData, 'destinationData');
             const result = await destinationCollection.insertOne(destinationData);
             res.json(result);
         });
@@ -77,7 +76,6 @@ async function run() {
         app.patch('/destination/:id', verifyToken, async (req, res) => {
             const { id } = req.params;
             const updatedData = req.body;
-            console.log(updatedData, 'updatedData');
             const result = await destinationCollection.updateOne(
                 { _id: new ObjectId(id) },
                 { $set: updatedData }
@@ -95,7 +93,6 @@ async function run() {
 
         app.post('/bookings', verifyToken, async (req, res) => {
             const bookingData = req.body;
-            console.log(bookingData, 'bookingData');
             const result = await bookingsCollection.insertOne(bookingData);
             res.json(result);
         });
