@@ -1,8 +1,10 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaRegUser, FaRegEnvelope, FaLock, FaGoogle } from "react-icons/fa";
 
 const SignInPage = () => {
@@ -36,6 +38,7 @@ const SignInPage = () => {
         console.log(data, error, "data and error");
 
         if (data) {
+            toast.success('Welcome Back! You have successfully sign in');
             redirect('/');
         }
 
@@ -143,12 +146,14 @@ const SignInPage = () => {
                 </button>
 
                 {/* Footer */}
-                <p className="text-center text-sm text-gray-500 mt-6">
-                    Already have an account?{" "}
-                    <span className="text-[#11a9cf] font-medium cursor-pointer hover:underline">
-                        Sign Up
-                    </span>
-                </p>
+                <Link href={'/sign-up'}>
+                    <p className="text-center text-sm text-gray-500 mt-6">
+                        Dont have an account yet?{" "}
+                        <span className="text-[#11a9cf] font-medium cursor-pointer hover:underline">
+                            Register
+                        </span>
+                    </p>
+                </Link>
             </div>
         </div>
     );

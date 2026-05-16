@@ -1,6 +1,7 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 import { FaRegUser, FaRegEnvelope, FaLock, FaGoogle } from "react-icons/fa";
@@ -184,12 +185,14 @@ const SignUpPage = () => {
                 </button>
 
                 {/* Footer */}
-                <p className="text-center text-sm text-gray-500 mt-6">
-                    Already have an account?{" "}
-                    <span className="text-[#11a9cf] font-medium cursor-pointer hover:underline">
-                        Sign In
-                    </span>
-                </p>
+                <Link href={'/sign-in'}>
+                    <p className="text-center text-sm text-gray-500 mt-6">
+                        Already have an account?{" "}
+                        <span className="text-[#11a9cf] font-medium cursor-pointer hover:underline">
+                            Sign In
+                        </span>
+                    </p>
+                </Link>
             </div>
         </div>
     );

@@ -6,6 +6,7 @@ import { Menu, User, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { Avatar, Spinner } from "@heroui/react";
+import toast from "react-hot-toast";
 
 export default function Navbar() {
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,6 +30,7 @@ export default function Navbar() {
 
     const handleSignOut = async () => {
         await authClient.signOut();
+        toast.success('You have successfully sign out');
     }
 
     return (
